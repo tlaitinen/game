@@ -1,42 +1,44 @@
 #include <stdio.h>
 #include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #endif
 
+#define TILE_W      64
+#define TILE_H      32
+
+void project(float x, float y, float z, int* dx, int *dy) {
+    *dx = x * (TILE_W/2) - y * (TILE_W/2);
+    *dy = x * (TILE_H/2) + y * (TILE_H/2) - z;
+}
 extern "C" int main(int argc, char** argv) {
-  printf("hello, world!\n");
 
-  SDL_Init(SDL_INIT_VIDEO);
-  SDL_Surface *screen = SDL_SetVideoMode(640, 480, 32, SDL_SWSURFACE);
+    SDL_Init(SDL_INIT_VIDEO);
+    SDL_Surface *screen = SDL_SetVideoMode(1024,768, 32, SDL_SWSURFACE);
 
-#ifdef TEST_SDL_LOCK_OPTS
-  EM_ASM("SDL.defaults.copyOnLock = false; SDL.defaults.discardOnLock = true; SDL.defaults.opaqueFrontBuffer = false;");
-#endif
-
-  if (SDL_MUSTLOCK(screen)) SDL_LockSurface(screen);
-  for (int i = 0; i < 256; i++) {
-    for (int j = 0; j < 256; j++) {
-#ifdef TEST_SDL_LOCK_OPTS
-      // Alpha behaves like in the browser, so write proper opaque pixels.
-      int alpha = 255;
-#else
-      // To emulate native behavior with blitting to screen, alpha component is ignored. Test that it is so by outputting
-      // data (and testing that it does get discarded)
-      int alpha = (i+j) % 255;
-#endif
-      *((Uint32*)screen->pixels + i * 256 + j) = SDL_MapRGBA(screen->format, i, j, 255-i, alpha);
+    SDL_Surface *image = IMG_Load("./img/floor1.png");
+    if (!image)
+    {
+        printf("IMG_Load: %s\n", IMG_GetError());
+        return 0;
     }
-  }
-  if (SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen);
-  SDL_Flip(screen); 
+    for (int y = 0; y < 20; y++) {
+        for (int x = 0; x < 20; x++) {
+            SDL_Rect dst;
+            dst.w = image->w;
+            dst.h = image->h;
+            project(x, y, 0, &dst.x, &dst.y);
+            dst.x += 512;
+            SDL_BlitSurface (image, NULL, screen, &dst);
+        }
+    }
 
-  printf("you should see a smoothly-colored square - no sharp lines but the square borders!\n");
-  printf("and here is some text that should be HTML-friendly: amp: |&| double-quote: |\"| quote: |'| less-than, greater-than, html-like tags: |<cheez></cheez>|\nanother line.\n");
+    SDL_Flip(screen); 
 
-  SDL_Quit();
+    SDL_Quit();
 
-  return 0;
+    return 0;
 }
 
