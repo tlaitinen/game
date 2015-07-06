@@ -10,6 +10,10 @@ message Tile {
     optional uint32 wall4 = 7;
     optional uint32 wall5 = 8;
     optional uint32 wall6 = 9;
+    optional int32 offset1 = 10;
+    optional int32 offset2 = 11;
+    optional int32 offset3 = 12;
+    optional int32 offset4 = 13;
 };
 
 message TileStack {
@@ -18,6 +22,7 @@ message TileStack {
 message Map {
     required uint32 width = 1;
     required uint32 height = 2;
-    repeated TileStack tile_stacks = 3;
+    required uint32 floors = 3;
+    repeated TileStack tile_stacks = 4;
 }
 

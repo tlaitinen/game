@@ -3,6 +3,7 @@
 #include <SDL/SDL_image.h>
 #include <vector>
 #include "game.pb.h"
+#include "Types.h"
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
@@ -10,20 +11,9 @@
 
 #define TILE_W      64
 #define TILE_H      32
-struct Tile {
-    uint16_t floor;
-    uint16_t background;
-    uint16_t foreground;
-    uint16_t walls[6];
-};
 
 using namespace std;
 
-struct Map {
-    int w, h;
-    vector< vector<Tile> > tiles;
-     
-};
 
 void project(float x, float y, float z, int* dx, int *dy) {
     *dx = x * (TILE_W/2) - y * (TILE_W/2);

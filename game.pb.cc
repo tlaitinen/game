@@ -40,7 +40,7 @@ void protobuf_AssignDesc_game_2eproto() {
       "game.proto");
   GOOGLE_CHECK(file != NULL);
   Tile_descriptor_ = file->message_type(0);
-  static const int Tile_offsets_[9] = {
+  static const int Tile_offsets_[13] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Tile, floor_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Tile, background_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Tile, foreground_),
@@ -50,6 +50,10 @@ void protobuf_AssignDesc_game_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Tile, wall4_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Tile, wall5_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Tile, wall6_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Tile, offset1_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Tile, offset2_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Tile, offset3_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Tile, offset4_),
   };
   Tile_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -78,9 +82,10 @@ void protobuf_AssignDesc_game_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(TileStack));
   Map_descriptor_ = file->message_type(2);
-  static const int Map_offsets_[3] = {
+  static const int Map_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Map, width_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Map, height_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Map, floors_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Map, tile_stacks_),
   };
   Map_reflection_ =
@@ -132,14 +137,16 @@ void protobuf_AddDesc_game_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\ngame.proto\022\004Game\"\227\001\n\004Tile\022\r\n\005floor\030\001 \002"
-    "(\r\022\022\n\nbackground\030\002 \002(\r\022\022\n\nforeground\030\003 \002"
-    "(\r\022\r\n\005wall1\030\004 \002(\r\022\r\n\005wall2\030\005 \002(\r\022\r\n\005wall"
-    "3\030\006 \002(\r\022\r\n\005wall4\030\007 \002(\r\022\r\n\005wall5\030\010 \002(\r\022\r\n"
-    "\005wall6\030\t \002(\r\"&\n\tTileStack\022\031\n\005tiles\030\001 \003(\013"
-    "2\n.Game.Tile\"J\n\003Map\022\r\n\005width\030\001 \002(\r\022\016\n\006he"
-    "ight\030\002 \002(\r\022$\n\013tile_stacks\030\003 \003(\0132\017.Game.T"
-    "ileStack", 288);
+    "\n\ngame.proto\022\004Game\"\333\001\n\004Tile\022\r\n\005floor\030\001 \002"
+    "(\r\022\022\n\nbackground\030\002 \001(\r\022\022\n\nforeground\030\003 \001"
+    "(\r\022\r\n\005wall1\030\004 \001(\r\022\r\n\005wall2\030\005 \001(\r\022\r\n\005wall"
+    "3\030\006 \001(\r\022\r\n\005wall4\030\007 \001(\r\022\r\n\005wall5\030\010 \001(\r\022\r\n"
+    "\005wall6\030\t \001(\r\022\017\n\007offset1\030\n \001(\005\022\017\n\007offset2"
+    "\030\013 \001(\005\022\017\n\007offset3\030\014 \001(\005\022\017\n\007offset4\030\r \001(\005"
+    "\"&\n\tTileStack\022\031\n\005tiles\030\001 \003(\0132\n.Game.Tile"
+    "\"Z\n\003Map\022\r\n\005width\030\001 \002(\r\022\016\n\006height\030\002 \002(\r\022\016"
+    "\n\006floors\030\003 \002(\r\022$\n\013tile_stacks\030\004 \003(\0132\017.Ga"
+    "me.TileStack", 372);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "game.proto", &protobuf_RegisterTypes);
   Tile::default_instance_ = new Tile();
@@ -170,11 +177,16 @@ const int Tile::kWall3FieldNumber;
 const int Tile::kWall4FieldNumber;
 const int Tile::kWall5FieldNumber;
 const int Tile::kWall6FieldNumber;
+const int Tile::kOffset1FieldNumber;
+const int Tile::kOffset2FieldNumber;
+const int Tile::kOffset3FieldNumber;
+const int Tile::kOffset4FieldNumber;
 #endif  // !_MSC_VER
 
 Tile::Tile()
   : ::google::protobuf::Message() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:Game.Tile)
 }
 
 void Tile::InitAsDefaultInstance() {
@@ -184,6 +196,7 @@ Tile::Tile(const Tile& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Game.Tile)
 }
 
 void Tile::SharedCtor() {
@@ -197,10 +210,15 @@ void Tile::SharedCtor() {
   wall4_ = 0u;
   wall5_ = 0u;
   wall6_ = 0u;
+  offset1_ = 0;
+  offset2_ = 0;
+  offset3_ = 0;
+  offset4_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
 Tile::~Tile() {
+  // @@protoc_insertion_point(destructor:Game.Tile)
   SharedDtor();
 }
 
@@ -231,177 +249,240 @@ Tile* Tile::New() const {
 }
 
 void Tile::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    floor_ = 0u;
-    background_ = 0u;
-    foreground_ = 0u;
-    wall1_ = 0u;
-    wall2_ = 0u;
-    wall3_ = 0u;
-    wall4_ = 0u;
-    wall5_ = 0u;
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<Tile*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 255) {
+    ZR_(floor_, wall5_);
   }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    wall6_ = 0u;
+  if (_has_bits_[8 / 32] & 7936) {
+    ZR_(wall6_, offset4_);
   }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
 bool Tile::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  // @@protoc_insertion_point(parse_start:Game.Tile)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required uint32 floor = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &floor_)));
           set_has_floor();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(16)) goto parse_background;
         break;
       }
 
-      // required uint32 background = 2;
+      // optional uint32 background = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 16) {
          parse_background:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &background_)));
           set_has_background();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(24)) goto parse_foreground;
         break;
       }
 
-      // required uint32 foreground = 3;
+      // optional uint32 foreground = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 24) {
          parse_foreground:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &foreground_)));
           set_has_foreground();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(32)) goto parse_wall1;
         break;
       }
 
-      // required uint32 wall1 = 4;
+      // optional uint32 wall1 = 4;
       case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 32) {
          parse_wall1:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &wall1_)));
           set_has_wall1();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(40)) goto parse_wall2;
         break;
       }
 
-      // required uint32 wall2 = 5;
+      // optional uint32 wall2 = 5;
       case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 40) {
          parse_wall2:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &wall2_)));
           set_has_wall2();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(48)) goto parse_wall3;
         break;
       }
 
-      // required uint32 wall3 = 6;
+      // optional uint32 wall3 = 6;
       case 6: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 48) {
          parse_wall3:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &wall3_)));
           set_has_wall3();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(56)) goto parse_wall4;
         break;
       }
 
-      // required uint32 wall4 = 7;
+      // optional uint32 wall4 = 7;
       case 7: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 56) {
          parse_wall4:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &wall4_)));
           set_has_wall4();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(64)) goto parse_wall5;
         break;
       }
 
-      // required uint32 wall5 = 8;
+      // optional uint32 wall5 = 8;
       case 8: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 64) {
          parse_wall5:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &wall5_)));
           set_has_wall5();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(72)) goto parse_wall6;
         break;
       }
 
-      // required uint32 wall6 = 9;
+      // optional uint32 wall6 = 9;
       case 9: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 72) {
          parse_wall6:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &wall6_)));
           set_has_wall6();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectTag(80)) goto parse_offset1;
+        break;
+      }
+
+      // optional int32 offset1 = 10;
+      case 10: {
+        if (tag == 80) {
+         parse_offset1:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &offset1_)));
+          set_has_offset1();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(88)) goto parse_offset2;
+        break;
+      }
+
+      // optional int32 offset2 = 11;
+      case 11: {
+        if (tag == 88) {
+         parse_offset2:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &offset2_)));
+          set_has_offset2();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(96)) goto parse_offset3;
+        break;
+      }
+
+      // optional int32 offset3 = 12;
+      case 12: {
+        if (tag == 96) {
+         parse_offset3:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &offset3_)));
+          set_has_offset3();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(104)) goto parse_offset4;
+        break;
+      }
+
+      // optional int32 offset4 = 13;
+      case 13: {
+        if (tag == 104) {
+         parse_offset4:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &offset4_)));
+          set_has_offset4();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -409,114 +490,163 @@ bool Tile::MergePartialFromCodedStream(
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:Game.Tile)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Game.Tile)
+  return false;
 #undef DO_
 }
 
 void Tile::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Game.Tile)
   // required uint32 floor = 1;
   if (has_floor()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->floor(), output);
   }
 
-  // required uint32 background = 2;
+  // optional uint32 background = 2;
   if (has_background()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->background(), output);
   }
 
-  // required uint32 foreground = 3;
+  // optional uint32 foreground = 3;
   if (has_foreground()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->foreground(), output);
   }
 
-  // required uint32 wall1 = 4;
+  // optional uint32 wall1 = 4;
   if (has_wall1()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->wall1(), output);
   }
 
-  // required uint32 wall2 = 5;
+  // optional uint32 wall2 = 5;
   if (has_wall2()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->wall2(), output);
   }
 
-  // required uint32 wall3 = 6;
+  // optional uint32 wall3 = 6;
   if (has_wall3()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->wall3(), output);
   }
 
-  // required uint32 wall4 = 7;
+  // optional uint32 wall4 = 7;
   if (has_wall4()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->wall4(), output);
   }
 
-  // required uint32 wall5 = 8;
+  // optional uint32 wall5 = 8;
   if (has_wall5()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(8, this->wall5(), output);
   }
 
-  // required uint32 wall6 = 9;
+  // optional uint32 wall6 = 9;
   if (has_wall6()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(9, this->wall6(), output);
+  }
+
+  // optional int32 offset1 = 10;
+  if (has_offset1()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->offset1(), output);
+  }
+
+  // optional int32 offset2 = 11;
+  if (has_offset2()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->offset2(), output);
+  }
+
+  // optional int32 offset3 = 12;
+  if (has_offset3()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->offset3(), output);
+  }
+
+  // optional int32 offset4 = 13;
+  if (has_offset4()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(13, this->offset4(), output);
   }
 
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
+  // @@protoc_insertion_point(serialize_end:Game.Tile)
 }
 
 ::google::protobuf::uint8* Tile::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Game.Tile)
   // required uint32 floor = 1;
   if (has_floor()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->floor(), target);
   }
 
-  // required uint32 background = 2;
+  // optional uint32 background = 2;
   if (has_background()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->background(), target);
   }
 
-  // required uint32 foreground = 3;
+  // optional uint32 foreground = 3;
   if (has_foreground()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->foreground(), target);
   }
 
-  // required uint32 wall1 = 4;
+  // optional uint32 wall1 = 4;
   if (has_wall1()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->wall1(), target);
   }
 
-  // required uint32 wall2 = 5;
+  // optional uint32 wall2 = 5;
   if (has_wall2()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->wall2(), target);
   }
 
-  // required uint32 wall3 = 6;
+  // optional uint32 wall3 = 6;
   if (has_wall3()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(6, this->wall3(), target);
   }
 
-  // required uint32 wall4 = 7;
+  // optional uint32 wall4 = 7;
   if (has_wall4()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(7, this->wall4(), target);
   }
 
-  // required uint32 wall5 = 8;
+  // optional uint32 wall5 = 8;
   if (has_wall5()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(8, this->wall5(), target);
   }
 
-  // required uint32 wall6 = 9;
+  // optional uint32 wall6 = 9;
   if (has_wall6()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(9, this->wall6(), target);
+  }
+
+  // optional int32 offset1 = 10;
+  if (has_offset1()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->offset1(), target);
+  }
+
+  // optional int32 offset2 = 11;
+  if (has_offset2()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->offset2(), target);
+  }
+
+  // optional int32 offset3 = 12;
+  if (has_offset3()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->offset3(), target);
+  }
+
+  // optional int32 offset4 = 13;
+  if (has_offset4()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(13, this->offset4(), target);
   }
 
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
+  // @@protoc_insertion_point(serialize_to_array_end:Game.Tile)
   return target;
 }
 
@@ -531,49 +661,49 @@ int Tile::ByteSize() const {
           this->floor());
     }
 
-    // required uint32 background = 2;
+    // optional uint32 background = 2;
     if (has_background()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->background());
     }
 
-    // required uint32 foreground = 3;
+    // optional uint32 foreground = 3;
     if (has_foreground()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->foreground());
     }
 
-    // required uint32 wall1 = 4;
+    // optional uint32 wall1 = 4;
     if (has_wall1()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->wall1());
     }
 
-    // required uint32 wall2 = 5;
+    // optional uint32 wall2 = 5;
     if (has_wall2()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->wall2());
     }
 
-    // required uint32 wall3 = 6;
+    // optional uint32 wall3 = 6;
     if (has_wall3()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->wall3());
     }
 
-    // required uint32 wall4 = 7;
+    // optional uint32 wall4 = 7;
     if (has_wall4()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->wall4());
     }
 
-    // required uint32 wall5 = 8;
+    // optional uint32 wall5 = 8;
     if (has_wall5()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -582,11 +712,39 @@ int Tile::ByteSize() const {
 
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // required uint32 wall6 = 9;
+    // optional uint32 wall6 = 9;
     if (has_wall6()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->wall6());
+    }
+
+    // optional int32 offset1 = 10;
+    if (has_offset1()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->offset1());
+    }
+
+    // optional int32 offset2 = 11;
+    if (has_offset2()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->offset2());
+    }
+
+    // optional int32 offset3 = 12;
+    if (has_offset3()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->offset3());
+    }
+
+    // optional int32 offset4 = 13;
+    if (has_offset4()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->offset4());
     }
 
   }
@@ -645,6 +803,18 @@ void Tile::MergeFrom(const Tile& from) {
     if (from.has_wall6()) {
       set_wall6(from.wall6());
     }
+    if (from.has_offset1()) {
+      set_offset1(from.offset1());
+    }
+    if (from.has_offset2()) {
+      set_offset2(from.offset2());
+    }
+    if (from.has_offset3()) {
+      set_offset3(from.offset3());
+    }
+    if (from.has_offset4()) {
+      set_offset4(from.offset4());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -662,7 +832,7 @@ void Tile::CopyFrom(const Tile& from) {
 }
 
 bool Tile::IsInitialized() const {
-  if ((_has_bits_[0] & 0x000001ff) != 0x000001ff) return false;
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   return true;
 }
@@ -678,6 +848,10 @@ void Tile::Swap(Tile* other) {
     std::swap(wall4_, other->wall4_);
     std::swap(wall5_, other->wall5_);
     std::swap(wall6_, other->wall6_);
+    std::swap(offset1_, other->offset1_);
+    std::swap(offset2_, other->offset2_);
+    std::swap(offset3_, other->offset3_);
+    std::swap(offset4_, other->offset4_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -702,6 +876,7 @@ const int TileStack::kTilesFieldNumber;
 TileStack::TileStack()
   : ::google::protobuf::Message() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:Game.TileStack)
 }
 
 void TileStack::InitAsDefaultInstance() {
@@ -711,6 +886,7 @@ TileStack::TileStack(const TileStack& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Game.TileStack)
 }
 
 void TileStack::SharedCtor() {
@@ -719,6 +895,7 @@ void TileStack::SharedCtor() {
 }
 
 TileStack::~TileStack() {
+  // @@protoc_insertion_point(destructor:Game.TileStack)
   SharedDtor();
 }
 
@@ -756,30 +933,34 @@ void TileStack::Clear() {
 
 bool TileStack::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  // @@protoc_insertion_point(parse_start:Game.TileStack)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // repeated .Game.Tile tiles = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 10) {
          parse_tiles:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_tiles()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(10)) goto parse_tiles;
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -787,12 +968,18 @@ bool TileStack::MergePartialFromCodedStream(
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:Game.TileStack)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Game.TileStack)
+  return false;
 #undef DO_
 }
 
 void TileStack::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Game.TileStack)
   // repeated .Game.Tile tiles = 1;
   for (int i = 0; i < this->tiles_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
@@ -803,10 +990,12 @@ void TileStack::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
+  // @@protoc_insertion_point(serialize_end:Game.TileStack)
 }
 
 ::google::protobuf::uint8* TileStack::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Game.TileStack)
   // repeated .Game.Tile tiles = 1;
   for (int i = 0; i < this->tiles_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
@@ -818,6 +1007,7 @@ void TileStack::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
+  // @@protoc_insertion_point(serialize_to_array_end:Game.TileStack)
   return target;
 }
 
@@ -875,9 +1065,7 @@ void TileStack::CopyFrom(const TileStack& from) {
 
 bool TileStack::IsInitialized() const {
 
-  for (int i = 0; i < tiles_size(); i++) {
-    if (!this->tiles(i).IsInitialized()) return false;
-  }
+  if (!::google::protobuf::internal::AllAreInitialized(this->tiles())) return false;
   return true;
 }
 
@@ -904,12 +1092,14 @@ void TileStack::Swap(TileStack* other) {
 #ifndef _MSC_VER
 const int Map::kWidthFieldNumber;
 const int Map::kHeightFieldNumber;
+const int Map::kFloorsFieldNumber;
 const int Map::kTileStacksFieldNumber;
 #endif  // !_MSC_VER
 
 Map::Map()
   : ::google::protobuf::Message() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:Game.Map)
 }
 
 void Map::InitAsDefaultInstance() {
@@ -919,16 +1109,19 @@ Map::Map(const Map& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Game.Map)
 }
 
 void Map::SharedCtor() {
   _cached_size_ = 0;
   width_ = 0u;
   height_ = 0u;
+  floors_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
 Map::~Map() {
+  // @@protoc_insertion_point(destructor:Game.Map)
   SharedDtor();
 }
 
@@ -959,10 +1152,24 @@ Map* Map::New() const {
 }
 
 void Map::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    width_ = 0u;
-    height_ = 0u;
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<Map*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 7) {
+    ZR_(width_, height_);
+    floors_ = 0u;
   }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   tile_stacks_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -970,20 +1177,23 @@ void Map::Clear() {
 
 bool Map::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  // @@protoc_insertion_point(parse_start:Game.Map)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required uint32 width = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &width_)));
           set_has_width();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(16)) goto parse_height;
         break;
@@ -991,40 +1201,54 @@ bool Map::MergePartialFromCodedStream(
 
       // required uint32 height = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 16) {
          parse_height:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &height_)));
           set_has_height();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_tile_stacks;
+        if (input->ExpectTag(24)) goto parse_floors;
         break;
       }
 
-      // repeated .Game.TileStack tile_stacks = 3;
+      // required uint32 floors = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 24) {
+         parse_floors:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &floors_)));
+          set_has_floors();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(34)) goto parse_tile_stacks;
+        break;
+      }
+
+      // repeated .Game.TileStack tile_stacks = 4;
+      case 4: {
+        if (tag == 34) {
          parse_tile_stacks:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_tile_stacks()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_tile_stacks;
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectTag(34)) goto parse_tile_stacks;
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -1032,12 +1256,18 @@ bool Map::MergePartialFromCodedStream(
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:Game.Map)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Game.Map)
+  return false;
 #undef DO_
 }
 
 void Map::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Game.Map)
   // required uint32 width = 1;
   if (has_width()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->width(), output);
@@ -1048,20 +1278,27 @@ void Map::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->height(), output);
   }
 
-  // repeated .Game.TileStack tile_stacks = 3;
+  // required uint32 floors = 3;
+  if (has_floors()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->floors(), output);
+  }
+
+  // repeated .Game.TileStack tile_stacks = 4;
   for (int i = 0; i < this->tile_stacks_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      3, this->tile_stacks(i), output);
+      4, this->tile_stacks(i), output);
   }
 
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
+  // @@protoc_insertion_point(serialize_end:Game.Map)
 }
 
 ::google::protobuf::uint8* Map::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Game.Map)
   // required uint32 width = 1;
   if (has_width()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->width(), target);
@@ -1072,17 +1309,23 @@ void Map::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->height(), target);
   }
 
-  // repeated .Game.TileStack tile_stacks = 3;
+  // required uint32 floors = 3;
+  if (has_floors()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->floors(), target);
+  }
+
+  // repeated .Game.TileStack tile_stacks = 4;
   for (int i = 0; i < this->tile_stacks_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        3, this->tile_stacks(i), target);
+        4, this->tile_stacks(i), target);
   }
 
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
+  // @@protoc_insertion_point(serialize_to_array_end:Game.Map)
   return target;
 }
 
@@ -1104,8 +1347,15 @@ int Map::ByteSize() const {
           this->height());
     }
 
+    // required uint32 floors = 3;
+    if (has_floors()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->floors());
+    }
+
   }
-  // repeated .Game.TileStack tile_stacks = 3;
+  // repeated .Game.TileStack tile_stacks = 4;
   total_size += 1 * this->tile_stacks_size();
   for (int i = 0; i < this->tile_stacks_size(); i++) {
     total_size +=
@@ -1146,6 +1396,9 @@ void Map::MergeFrom(const Map& from) {
     if (from.has_height()) {
       set_height(from.height());
     }
+    if (from.has_floors()) {
+      set_floors(from.floors());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -1163,11 +1416,9 @@ void Map::CopyFrom(const Map& from) {
 }
 
 bool Map::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
 
-  for (int i = 0; i < tile_stacks_size(); i++) {
-    if (!this->tile_stacks(i).IsInitialized()) return false;
-  }
+  if (!::google::protobuf::internal::AllAreInitialized(this->tile_stacks())) return false;
   return true;
 }
 
@@ -1175,6 +1426,7 @@ void Map::Swap(Map* other) {
   if (other != this) {
     std::swap(width_, other->width_);
     std::swap(height_, other->height_);
+    std::swap(floors_, other->floors_);
     tile_stacks_.Swap(&other->tile_stacks_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
