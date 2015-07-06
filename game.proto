@@ -1,0 +1,23 @@
+package Game;
+
+message Tile {
+    required uint32 floor = 1;
+    optional uint32 background = 2;
+    optional uint32 foreground = 3;
+    optional uint32 wall1 = 4;
+    optional uint32 wall2 = 5;
+    optional uint32 wall3 = 6;
+    optional uint32 wall4 = 7;
+    optional uint32 wall5 = 8;
+    optional uint32 wall6 = 9;
+};
+
+message TileStack {
+    repeated Tile tiles = 1;
+}
+message Map {
+    required uint32 width = 1;
+    required uint32 height = 2;
+    repeated TileStack tile_stacks = 3;
+}
+
