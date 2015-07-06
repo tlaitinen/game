@@ -2,6 +2,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <map>
+#include <math.h>
 #include <vector>
 #include "game.pb.h"
 #include <dirent.h>
@@ -25,7 +26,7 @@ namespace game {
         *dx = x * (TILE_W/2) - y * (TILE_W/2);
         *dy = x * (TILE_H/2) + y * (TILE_H/2) - z;
     }
-    void invProject(float x, float y, float z, int* dx, int* dy) {
+    void invProject(float x, float y, float z, float* dx, float* dy) {
         float tw = TILE_W/2, th = TILE_H/2;
         *dx = x / tw + ((y + z) / th - x / tw) / 2;
         *dy = ((y + z) / th - x / tw) / 2;
@@ -38,6 +39,7 @@ namespace game {
             } else if (event.type == SDL_MOUSEMOTION) { 
             }
         }
+        SDL_FillRect(m.screen, NULL, SDL_MapRGB(m.screen->format, 0, 0, 0));
         SDL_Surface* image = m.images["floor1"];
         for (int y = 0; y < 20; y++) {
             for (int x = 0; x < 20; x++) {
@@ -53,16 +55,31 @@ namespace game {
         int mx, my;
         SDL_GetMouseState(&mx, &my);
         SDL_Rect dst;
-        int tx, ty;
+        float tx, ty;
         invProject(mx, my, 0, &tx, &ty);
-        image = m.images["floor2"];
+        image = m.images["select0"];
+        tx = floor(tx);
+        ty = floor(ty);
         project(tx, ty, 0, &dst.x, &dst.y);
-        //dst.y -= image->h;
+        dst.y -= image->h;
+        dst.y += TILE_H;
         dst.w = image->w;
         dst.h = image->h;
 
         dst.x -= TILE_W/2;
         SDL_BlitSurface(image, NULL, m.screen, &dst);
+
+        image = m.images["select1"];
+        project(tx, ty, 0, &dst.x, &dst.y);
+        dst.y -= image->h;
+        dst.y += TILE_H;
+        dst.w = image->w;
+        dst.h = image->h;
+
+        dst.x -= TILE_W/2;
+        SDL_BlitSurface(image, NULL, m.screen, &dst);
+
+
 
         SDL_Flip(m.screen); 
     }
@@ -100,7 +117,7 @@ extern "C" int main(int argc, char** argv) {
 
     SDL_Init(SDL_INIT_VIDEO);
 
-    m.screen = SDL_SetVideoMode(1024,768, 32, SDL_SWSURFACE);
+    m.screen = SDL_SetVideoMode(1024,768, 32, SDL_HWSURFACE);
     if (loadImages()) 
         return -1;
     emscripten_set_main_loop(game::mainLoop, 0, true);
