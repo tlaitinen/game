@@ -2,7 +2,7 @@
 module Game.Cell where
 
 import GHC.Generics
-import Data.Int
+import Data.Aeson
 
 type Walls = (Int, Int, Int, Int, Int, Int)
 type Offsets = (Int, Int, Int, Int)
@@ -13,3 +13,6 @@ data Cell = Cell {
     walls      :: Walls,
     offsets    :: Offsets
 } deriving Generic
+
+instance FromJSON Cell
+instance ToJSON Cell
